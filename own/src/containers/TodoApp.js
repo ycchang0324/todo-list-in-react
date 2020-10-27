@@ -76,7 +76,7 @@ class TodoApp extends Component {
 
     render() {
         return (
-            <div>
+            <>
                 <Header text="todos" />
                 <section className="todo-app__main">
                     <Input update={this.update.bind(this)} handleKeyUp={this.handleKeyUp.bind(this)} />
@@ -97,7 +97,7 @@ class TodoApp extends Component {
                         Clear Complete
                     </div>
                 </footer>
-            </div>
+            </>
         );
     }
 }
