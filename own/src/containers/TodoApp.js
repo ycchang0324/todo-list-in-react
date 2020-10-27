@@ -21,17 +21,17 @@ class TodoApp extends Component {
     }
 
     handleKeyUp = (event) => {
-        if(event.charCode === 13 && event.target.value != ''){
+        if(event.charCode === 13 && event.target.value !== ''){
             let input = {
                 value : event.target.value,
                 isComplete: false,
                 id: this.state.serial         
             }
-            this.setState({
-                todolist: this.state.todolist.concat(input),
-                serial: this.state.serial + 1,
+            this.setState(state => ({
+                todolist: state.todolist.concat(input),
+                serial: state.serial + 1,
                        
-            });   
+            }));   
             event.target.value = '';          
         }        
     };
@@ -40,8 +40,6 @@ class TodoApp extends Component {
         this.setState({
            status: e.target.innerText
         });
-        
-        //if(this.setState)
     }
 
     changeState(e){
@@ -50,32 +48,30 @@ class TodoApp extends Component {
         console.log(node.id)
         
         const newTodoList = [...this.state.todolist];
+
         newTodoList.forEach(items =>{
-            if(items.id == node.id){
-                    items.isComplete = !(items.isComplete);
-                    
-                    ReactDOM.findDOMNode(node).children[1].className =  items.isComplete ? 'todo-app__item-detail-complete' : 'todo-app__item-detail';
-                    
+            if(items.id.toString() === node.id.toString()){
+                    items.isComplete = !(items.isComplete);    
+                    ReactDOM.findDOMNode(node).children[1].className =  items.isComplete ? 'todo-app__item-detail-complete' : 'todo-app__item-detail';            
             }
         });
         this.setState({
             todolist: newTodoList 
         });
-        
     }
 
     delete(e){
         let node = ReactDOM.findDOMNode(e.target).parentNode;
         console.log(node.id)
-        this.setState({
-            todolist : this.state.todolist.filter( (input) => input.id != node.id)
-        }) 
+        this.setState(state =>({
+            todolist : state.todolist.filter( (input) => input.id.toString() !== node.id.toString())
+        })) 
     }
 
     clear(e){
-        this.setState({
-            todolist: this.state.todolist.filter( (input) => input.isComplete == false)
-        })
+        this.setState(state => ({
+            todolist: state.todolist.filter( (input) => input.isComplete === false)
+        }))
     }
 
     render() {
@@ -86,30 +82,24 @@ class TodoApp extends Component {
                     <Input update={this.update.bind(this)} handleKeyUp={this.handleKeyUp.bind(this)} />
                 </section>
                 <ul className="todo-app__list" id="todo-list">
-{/*                    
-                    { this.state.status === 'All' &&
-                        <List todolist={this.state.todolist} status = {this.state.status} delete={this.delete.bind(this)} changeState={this.changeState.bind(this)}/>
-                    } */}
-                <List todolist={this.state.todolist} status = {this.state.status} delete={this.delete.bind(this)} changeState={this.changeState.bind(this)}/>
-                
-                   
+                <List todolist={this.state.todolist} status = {this.state.status} delete={this.delete.bind(this)} changeState={this.changeState.bind(this)}/>        
                 </ul>
                 <footer className="todo-app__footer">
-                <div className="todo-app__total" id="todo-total">
-                    {this.state.todolist.length}   left
+                    <div className="todo-app__total" id="todo-total">
+                        {this.state.todolist.length}   left
                     </div>
-                <ul className="todo-app__view-buttons">
-                    <Select id = "button-all" updateStatus={this.updateStatus.bind(this)} value="All"></Select>
-                    <Select id = "button-active" updateStatus={this.updateStatus.bind(this)} value="Active"></Select>
-                    <Select id = "button-complete" updateStatus={this.updateStatus.bind(this)} value="Complete"></Select>
-                </ul>
+                    <ul className="todo-app__view-buttons">
+                        <Select id = "button-all" updateStatus={this.updateStatus.bind(this)} value="All"></Select>
+                        <Select id = "button-active" updateStatus={this.updateStatus.bind(this)} value="Active"></Select>
+                        <Select id = "button-complete" updateStatus={this.updateStatus.bind(this)} value="Complete"></Select>
+                    </ul>
                     <div className="todo-app__clean" onClick={this.clear.bind(this)}>
                         Clear Complete
-                        </div>
-    
-            </footer>
+                    </div>
+                </footer>
             </div>
         );
     }
 }
+
 export default TodoApp;

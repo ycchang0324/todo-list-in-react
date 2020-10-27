@@ -1,11 +1,11 @@
-import React,{ Component } from "react"; 
+import React from "react"; 
 import icon from "../img/x.png";
 
 
 const List = (props) => props.todolist.map((input) => 
         <li className="todo-app__item" key={input.id} id={input.id} style={ 
-            ((props.status=='Complete' && input.isComplete==false) 
-            ||(props.status=='Active' && input.isComplete==true)) ? {display:"none"} : {} }>
+            ((props.status === 'Complete' && input.isComplete === false) 
+            ||(props.status === 'Active' && input.isComplete === true)) ? {display:"none"} : {} }>
         <div className="todo-app__checkbox" >
             <input className="todo-app__checkbox-input" type="checkbox" id={"checkbox" + input.id} onClick={props.changeState}></input>
             <label htmlFor={"checkbox" + input.id}/>
