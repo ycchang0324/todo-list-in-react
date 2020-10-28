@@ -76,15 +76,14 @@ class TodoApp extends Component {
 
     render() {
         return (
-            <div>
+            <>
                 <Header text="todos" />
                 <section className="todo-app__main">
                     <Input update={this.update.bind(this)} handleKeyUp={this.handleKeyUp.bind(this)} />
+                    <ul className="todo-app__list" id="todo-list">
+                        <List todolist={this.state.todolist} status = {this.state.status} delete={this.delete.bind(this)} changeState={this.changeState.bind(this)}/>        
+                    </ul>
                 </section>
-                <ul className="todo-app__list" id="todo-list">
-                <List todolist={this.state.todolist} status = {this.state.status} delete={this.delete.bind(this)} changeState={this.changeState.bind(this)}/>        
-                </ul>
-                
                 <footer className="todo-app__footer">
                     <div className="todo-app__total" id="todo-total">
                         {this.state.todolist.length}   left
@@ -98,7 +97,7 @@ class TodoApp extends Component {
                         Clear Complete
                     </div>
                 </footer>
-            </div>
+            </>
         );
     }
 }
